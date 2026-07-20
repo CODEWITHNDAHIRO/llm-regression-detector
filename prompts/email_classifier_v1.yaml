@@ -1,0 +1,25 @@
+version: "v1"
+timestamp: "2026-07-19"
+description: "Baseline zero-shot classifier"
+
+system_prompt: |
+  You are a customer support email triage assistant. Read the email below
+  and classify it into exactly one category, then write a one-sentence
+  summary of what the customer wants.
+
+  Categories:
+  - billing: payment, invoices, refunds, subscription charges
+  - technical: bugs, errors, product not working as expected
+  - account: login issues, password resets, profile/settings changes
+  - general: anything else (feedback, questions, sales inquiries)
+
+  Respond ONLY with the classification and summary. Do not add extra
+  commentary.
+
+few_shot_examples:
+  - email: "I was charged twice for my subscription this month, please help."
+    category: "billing"
+    summary: "Customer reports a duplicate subscription charge."
+  - email: "The app crashes every time I try to upload a photo."
+    category: "technical"
+    summary: "Customer's app crashes on photo upload."

@@ -1,0 +1,146 @@
+[
+  {
+    "id": "billing-001",
+    "email": "Hi, I was charged $49.99 twice this month for my Pro subscription. Can you refund the duplicate charge? Order confirmation numbers are #4471 and #4472, both dated the 3rd.",
+    "expected_category": "billing",
+    "expected_summary": "Customer reports a duplicate subscription charge and requests a refund.",
+    "difficulty": "easy",
+    "notes": "Clean, unambiguous billing case with specific reference numbers. Baseline sanity check."
+  },
+  {
+    "id": "billing-002",
+    "email": "why does my invoice say net 30 but the portal shows overdue after 15 days??? this is the second time this has happened",
+    "expected_category": "billing",
+    "expected_summary": "Customer flags a discrepancy between stated and enforced invoice payment terms.",
+    "difficulty": "ambiguous",
+    "notes": "Could plausibly be tagged 'technical' since it's a portal display bug, but the substance is a billing terms dispute. Tests whether the model classifies by root topic vs. surface mechanism."
+  },
+  {
+    "id": "technical-001",
+    "email": "Every time I try to export my report as a PDF the app just freezes on 'Generating...' and I have to force-quit. Happens on both Chrome and Safari, macOS 14.5.",
+    "expected_category": "technical",
+    "expected_summary": "Customer's PDF export feature freezes the app across multiple browsers.",
+    "difficulty": "easy",
+    "notes": "Clean technical bug report with reproduction detail. Baseline sanity check."
+  },
+  {
+    "id": "technical-002",
+    "email": "app broken",
+    "expected_category": "technical",
+    "expected_summary": "Customer reports the app is not working, with no further detail provided.",
+    "difficulty": "edge_case",
+    "notes": "Extremely short, no actionable detail. Tests whether the model still classifies correctly (technical, by keyword 'broken') rather than defaulting to 'general' for lack of information. Ideal summary should reflect the lack of detail, not invent specifics."
+  },
+  {
+    "id": "account-001",
+    "email": "I reset my password twice using the email link but it still says incorrect password when I try to log in. Locked out for two days now.",
+    "expected_category": "account",
+    "expected_summary": "Customer remains locked out of their account despite resetting their password twice.",
+    "difficulty": "easy",
+    "notes": "Clean account-access case. Baseline sanity check."
+  },
+  {
+    "id": "account-002",
+    "email": "can u chnage the email on my acount from old@gmial.com to new@gmail.com thanksss",
+    "expected_category": "account",
+    "expected_summary": "Customer requests to change the email address associated with their account.",
+    "difficulty": "edge_case",
+    "notes": "Heavy typos and informal shorthand. Tests robustness to noisy real-world text rather than clean, well-formatted input."
+  },
+  {
+    "id": "general-001",
+    "email": "Love the new dashboard redesign, way easier to find what I need now. Any plans to add dark mode?",
+    "expected_category": "general",
+    "expected_summary": "Customer gives positive feedback on the dashboard redesign and asks about dark mode.",
+    "difficulty": "easy",
+    "notes": "Positive feedback + feature request, no support issue. Baseline sanity check for the 'general' bucket."
+  },
+  {
+    "id": "general-002",
+    "email": "Oh great, ANOTHER update that changes where the export button is. Really appreciate having to relearn your UI every month. Fantastic work as always.",
+    "expected_category": "general",
+    "expected_summary": "Customer sarcastically criticizes the frequency of UI changes.",
+    "difficulty": "edge_case",
+    "notes": "Sarcasm test. Literal reading of 'fantastic work' could mislead a naive sentiment-based classifier into treating this as positive feedback. Correct category is general (product feedback), and the summary must not take the sarcasm at face value."
+  },
+  {
+    "id": "billing-003",
+    "email": "Hola, mi factura de este mes es incorrecta, me cobraron por 3 usuarios pero solo tenemos 2 licencias activas.",
+    "expected_category": "billing",
+    "expected_summary": "Customer says this month's invoice incorrectly charged for 3 users instead of 2.",
+    "difficulty": "edge_case",
+    "notes": "Non-English input (Spanish). Tests whether the classifier and summarizer handle other languages correctly rather than failing or defaulting to 'general'."
+  },
+  {
+    "id": "technical-003",
+    "email": "API returning 500 errors intermittently on POST /v2/orders since ~14:00 UTC today. About 1 in 5 requests. Retrying doesn't help. Need urgent help, this is affecting our checkout flow in production.",
+    "expected_category": "technical",
+    "expected_summary": "Customer reports intermittent 500 errors on a production API endpoint affecting checkout.",
+    "difficulty": "easy",
+    "notes": "Technical/developer-facing language with specific error codes and timestamps. Tests handling of a more technical register than typical consumer support emails."
+  },
+  {
+    "id": "account-003",
+    "email": "This is the third email I'm sending. I need my account deleted and all my data removed per GDPR. Please confirm within 30 days as required by law.",
+    "expected_category": "account",
+    "expected_summary": "Customer requests account deletion and data removal under GDPR, noting repeated prior contact.",
+    "difficulty": "ambiguous",
+    "notes": "Could be tagged 'general' (legal/compliance request) rather than 'account', since it's not a login/settings issue in the typical sense. Decision: classify as 'account' because it is fundamentally an account-lifecycle action. Tests whether the model over-indexes on the word 'legal' or correctly identifies the core action requested."
+  },
+  {
+    "id": "general-003",
+    "email": "Do you offer volume discounts for teams over 200 seats? Would like to talk to sales.",
+    "expected_category": "general",
+    "expected_summary": "Prospective customer asks about volume discounts and requests to speak with sales.",
+    "difficulty": "easy",
+    "notes": "Sales inquiry, distinct from a support issue. Tests that the model doesn't over-classify anything mentioning money as 'billing' -- this is a pre-sales question, not an existing billing problem."
+  },
+  {
+    "id": "technical-004",
+    "email": "not sure if this is a bug or if im just dumb but the search bar doesnt find anything even when i type the exact title of a document i KNOW exists",
+    "expected_category": "technical",
+    "expected_summary": "Customer reports that search fails to find documents even with exact title matches.",
+    "difficulty": "ambiguous",
+    "notes": "Self-deprecating, uncertain framing ('not sure if this is a bug'). Tests whether hedging language causes the model to misclassify as 'general' instead of correctly identifying the underlying technical complaint."
+  },
+  {
+    "id": "billing-004",
+    "email": "downgrade me to the free plan effective immediately, and I want a prorated refund for the unused days on my current plan",
+    "expected_category": "billing",
+    "expected_summary": "Customer requests an immediate downgrade to the free plan and a prorated refund.",
+    "difficulty": "easy",
+    "notes": "Two-part billing request (downgrade + refund). Tests whether the one-sentence summary captures both actions, not just the first one mentioned."
+  },
+  {
+    "id": "account-004",
+    "email": "2fa",
+    "expected_category": "account",
+    "expected_summary": "Customer's message consists only of '2fa', with no further context provided.",
+    "difficulty": "edge_case",
+    "notes": "Single-word/acronym email with essentially no information. Tests graceful handling of near-empty input -- the ideal summary should reflect the ambiguity honestly rather than fabricating a plausible-sounding but invented request."
+  },
+  {
+    "id": "general-004",
+    "email": "Hey! Are you guys hiring? I'm a huge fan of the product and would love to work there.",
+    "expected_category": "general",
+    "expected_summary": "Customer expresses interest in job opportunities at the company.",
+    "difficulty": "easy",
+    "notes": "Off-topic but clearly 'general'. Tests that the model doesn't try to force-fit an unrelated request into billing/technical/account."
+  },
+  {
+    "id": "technical-005",
+    "email": "getting a weird error, screenshot attached: 'Error 0x8007045D: cannot sync'. tried restarting, tried reinstalling, tried a different network. nothing works. this started right after your update yesterday.",
+    "expected_category": "technical",
+    "expected_summary": "Customer reports a persistent sync error that began after a recent update, despite multiple troubleshooting attempts.",
+    "difficulty": "easy",
+    "notes": "References an attached screenshot the model can't see -- tests that the summary is written from the text content alone and doesn't hallucinate details about an image that isn't actually provided."
+  },
+  {
+    "id": "billing-005",
+    "email": "I cancelled my subscription last week but I can still see I'm being billed. Also separately, is there a way to get an itemized receipt for tax purposes?",
+    "expected_category": "billing",
+    "expected_summary": "Customer reports being billed after cancellation and asks about obtaining an itemized receipt.",
+    "difficulty": "ambiguous",
+    "notes": "Two distinct billing sub-issues bundled in one email (cancellation bug + receipt request). Tests whether the model's single-sentence summary prioritizes the more urgent issue (still being billed) over the secondary one."
+  }
+]

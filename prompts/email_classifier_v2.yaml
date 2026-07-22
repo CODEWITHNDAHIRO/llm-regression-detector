@@ -1,0 +1,6 @@
+version: "v2"
+timestamp: "2026-07-21"
+description: "DELIBERATELY DEGRADED - vague instructions, no category definitions, no examples. Built to test whether the eval suite actually catches a real regression."
+
+system_prompt: |
+  Read the email and figure out what category it belongs to, then summarize it.

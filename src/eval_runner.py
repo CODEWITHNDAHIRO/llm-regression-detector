@@ -100,14 +100,16 @@ def save_run(results: list[CaseResult], prompt_version: str) -> Path:
     out_path.write_text(json.dumps(run_data, indent=2))
     return out_path
 
-
 if __name__ == "__main__":
-    results = asyncio.run(run_eval(prompt_version="v1"))
+    import sys
+    prompt_version = sys.argv[1] if len(sys.argv) > 1 else "v1"
+
+    results = asyncio.run(run_eval(prompt_version=prompt_version))
 
     passed = sum(1 for r in results if r.category_match)
     total = len(results)
     avg_summary_score = sum(r.summary_score for r in results) / total
-    print(f"Ran {total} cases.")
+    print(f"Ran {total} cases against prompt {prompt_version}.")
     print(f"  Category matches: {passed}/{total} ({passed/total:.0%})")
     print(f"  Avg summary score: {avg_summary_score:.2f}/5\n")
 
@@ -115,5 +117,5 @@ if __name__ == "__main__":
         status = "PASS" if r.category_match else "FAIL"
         print(f"  [{status}] {r.case_id}  category={r.actual_category}  summary_score={r.summary_score}/5")
 
-    out_path = save_run(results, prompt_version="v1")
+    out_path = save_run(results, prompt_version=prompt_version)
     print(f"\nSaved run to {out_path}")
